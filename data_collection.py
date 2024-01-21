@@ -1,35 +1,77 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait, Select
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from bs4 import BeautifulSoup
-import time
-import re
 import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import requests
+from bs4 import BeautifulSoup
+import regex as re
 
-# Defining browser and adding "-headless" argument
-options = Options()
-options.add_argument("--headless")
-driver = webdriver.Chrome(options=options)
-url = 'https://sprs.parl.gov.sg/'
-driver.maximize_window()
-driver.get(url)
 
-select_element = driver.find_element(By.CSS_SELECTOR, 'select.form-control.ng-untouched.ng-pristine.ng-valid')
-select = Select(select_element)
-select.select_by_value('1: 1')
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Ensures the browser window won't be shown
 
-# Click the search button
-search_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Search')]")
-search_button.click()
+driver = webdriver.Chrome(options = chrome_options)
+driver.get('https://sprs.parl.gov.sg/search/#/topic?reportid=022_19680124_S0003_T0008')
 
-container = WebDriverWait(driver, 20).until(
-    EC.presence_of_element_located((By.CSS_SELECTOR, 'div.container-fluid')))
+webpage = driver.page_source
+soup = BeautifulSoup(webpage, 'lxml')
+meta_tags = soup.find_all('meta')
+meta_data = {}
 
-print(container.text.strip())
+for tag in meta_tags:
+    if 'name' in tag.attrs:
+        if tag.attrs['name'] in ('Sit_Date', 'Title', 'MP_Speak'):
+            name = tag.attrs['name']
+            content = tag.attrs.get('content', '')
+            meta_data[name] = content
 
-search_results = container.find_elements(By.CSS_SELECTOR, "a[class*=_ngcontent]")
+print(meta_data)
 
-for result in search_results:
-    print(result.text)
+table = soup.find('div', class_='reportTable')
+print(table)
+exit()
+
+
+"""
+print(soup.find_all('h1')[0].text)  # h[n], n = size of text
+
+print(len(soup.find_all('h1')))  # Number of h1 tags
+
+for i in soup.find_all('h2'):
+    print(i.text.strip())
+
+print("P tags:")
+for i in soup.find_all('p'):
+    print(i.text.strip())
+"""
+
+# Analysing each company profile on the webpage
+report = soup.findall('div', class_='reportTable')
+print(report)  # Visualise the company sections
+exit()
+
+
+
+
+print(len(company))  # Prints number of companies on the page
+name = []
+rating = []
+reviews = []
+ownership = []
+for i in company:
+    name.append(i.find('h2').text.strip())
+    rating.append(i.find('span', class_='companyCardWrapper__companyRatingValue').text.strip())
+    reviews.append(i.find('span', class_='companyCardWrapper__ActionCount').text.strip())
+
+    # Extract ownership information
+    ownership_text = i.find('span', class_='companyCardWrapper__interLinking').text.strip()
+    ownership_match = re.search(r'\b(Public|Private)\b', ownership_text)
+    if ownership_match:
+        ownership.append(ownership_match.group(0))
+    else:
+        ownership.append('Private')
+
+data = {'Name': name, 'Rating': rating, 'Reviews': reviews, 'Ownership': ownership}
+df = pd.DataFrame(data)
+print(df)
+
+
