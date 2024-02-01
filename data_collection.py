@@ -1,9 +1,13 @@
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import requests
 from bs4 import BeautifulSoup
 import regex as re
+
 
 parl1 = ['08-12-1965', '13-12-1965', '16-12-1965', '17-12-1965', '20-12-1965', '21-12-1965', '22-12-1965', '23-12-1965',
          '24-12-1965', '28-12-1965', '29-12-1965', '30-12-1965', '31-12-1965', '23-2-1966', '21-4-1966', '22-6-1966',
@@ -17,22 +21,28 @@ chrome_options = Options()
 chrome_options.add_argument("--headless")  # Ensures the browser window won't be shown
 driver = webdriver.Chrome(options=chrome_options)
 driver.get(f'https://sprs.parl.gov.sg/search/#/report?sittingdate={parl1[0]}')
-webpage = driver.page_source
-soup = BeautifulSoup(webpage, 'html.parser')
 
-meta_tags = soup.find_all('meta')
-meta_data = {}
+try:
+    view_section = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, 'div.viewSection'))
+    )
+    webpage = driver.page_source
+    soup = BeautifulSoup(webpage, 'html.parser')
 
-for tag in meta_tags:
-    if 'name' in tag.attrs:
-        if tag.attrs['name'] in ('Sit_Date', 'Title', 'MP_Speak'):
-            name = tag.attrs['name']
-            content = tag.attrs.get('content', '')
-            meta_data[name] = content
+    meta_tags = soup.find_all('meta')
+    meta_data = {}
 
-print(meta_data)
+    for tag in meta_tags:
+        if 'name' in tag.attrs:
+            if tag.attrs['name'] in ('Parl_No', 'Sit_No', 'Sit_Date'):
+                name = tag.attrs['name']
+                content = tag.attrs.get('content', '')
+                meta_data[name] = content
 
-exit()
+    print(meta_data)
 
-table = soup.find('div', class_='reportTable')
-print(table.text.strip())
+    div_text = soup.find('div', class_='viewSection').get_text()
+    print(div_text)
+
+finally:
+    driver.quit()
