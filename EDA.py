@@ -1,26 +1,33 @@
 import pandas as pd
 from wordcloud import WordCloud
-from data_preprocessing import data_preparation
+from data_preprocessing import data_preparation, remove_stopwords, length_filter
+import nltk
+from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 import os.path
 
 data = data_preparation('Datasets/Parl_1.csv')
-
+data['main_text'] = data['main_text'].apply(remove_stopwords)
 # Set a relative path
 folder_name = 'output'
 current_directory = os.path.dirname(__file__)  # Gets the directory where the script is located
 path = os.path.join(current_directory, folder_name)
 
 # Overview
-print(data.shape)
+print("Original Data:")
+rows, cols = data.shape
+print(f"{rows} rows, {cols} columns")
 print(f"Missing values in each column: \n{data.isnull().sum()}")
-print(f"Date range: {data['sitting_date'].min()} to {data['sitting_date'].max()}")
-
-# Text Data Analysis
 data['doc_length'] = data['main_text'].apply(lambda x: len(x.split()))
-num_short_docs = data[data['doc_length'] < 50].shape[0]
-print(f"No. of short documents: {num_short_docs}")
 
+# Filtered Data
+data = data.dropna()  # Remove rows with missing values
+data = length_filter(data, 50)
+new_rows, new_cols = data.shape
+print("\nFiltered Data:")
+print(f"{new_rows} rows, {new_cols} columns")
+data.to_excel('Datasets\Excel_Dataset.xlsx', index=False)
+# Text Data Analysis
 plt.figure(figsize=(12, 8))
 plt.hist(data['doc_length'], bins=50, color='skyblue', edgecolor='black', alpha=0.7)
 plt.title('Distribution of Document Lengths', fontsize=16)
@@ -46,9 +53,16 @@ plt.tight_layout()
 plt.savefig(os.path.join(path, 'filtered_doc_length.png'))
 
 # Word Clouds
-all_words = ' '.join(data['main_test)'].split())
+all_words = ' '.join(data['main_text'])
+
+wordcloud = WordCloud(width=800, height=800, background_color='white', min_font_size=10).generate(all_words)
+plt.figure(figsize=(8, 8), facecolor=None)
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.tight_layout(pad=5)
+plt.savefig(os.path.join(path, 'text_wordcloud'))
+
 
 # Speaker Analysis
-
 
 # List of speakers, and count their occurences in the dataset.
