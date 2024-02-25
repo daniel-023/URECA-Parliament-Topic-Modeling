@@ -1,12 +1,13 @@
 import pandas as pd
 from wordcloud import WordCloud
-from data_preprocessing import data_preparation, remove_stopwords, length_filter
+from data_preprocessing import data_preparation, remove_stopwords, length_filter, speaker_count
 import nltk
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 import os.path
 
 data = data_preparation('Datasets/Parl_1.csv')
+
 data['main_text'] = data['main_text'].apply(remove_stopwords)
 # Set a relative path
 folder_name = 'output'
@@ -56,13 +57,26 @@ plt.savefig(os.path.join(path, 'filtered_doc_length.png'))
 all_words = ' '.join(data['main_text'])
 
 wordcloud = WordCloud(width=800, height=800, background_color='white', min_font_size=10).generate(all_words)
-plt.figure(figsize=(8, 8), facecolor=None)
+plt.figure(figsize=(12, 8), facecolor=None)
 plt.imshow(wordcloud)
 plt.axis("off")
 plt.tight_layout(pad=5)
 plt.savefig(os.path.join(path, 'text_wordcloud'))
 
-
+print("\n")
 # Speaker Analysis
+speakers = speaker_count(data)
+print(f"Total speakers:{len(speakers.keys())}")
+speakers_df = pd.DataFrame(list(speakers.items()), columns=['MP_name', 'Frequency'])
+top_speakers_df = speakers_df.sort_values(by='Frequency', ascending=False).head(10)
 
-# List of speakers, and count their occurences in the dataset.
+plt.figure(figsize=(15, 10))
+plt.bar(top_speakers_df['MP_name'], top_speakers_df['Frequency'], color='Lavender')
+plt.title('Top 10 MPs by Frequency in Documents', fontsize=16)
+plt.xlabel('MP Name', ha = 'center', fontsize=14)
+plt.ylabel('Frequency', fontsize=14)
+plt.xticks(fontsize=12, ha='right', rotation=45)
+plt.yticks(fontsize=12, ha='right')
+plt.grid(True, alpha=0.5)
+plt.tight_layout()
+plt.savefig(os.path.join(path, 'Top10_MP_frequency.png'))

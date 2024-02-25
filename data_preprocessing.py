@@ -13,10 +13,22 @@ def data_preparation(path):
     return data
 
 
+def speaker_count(data):
+    speakers = data['MPs_speaking']
+    speaker_dict = {}
+    for row in speakers:
+        for speaker in row.split(';'):
+            if speaker != '':
+                if speaker in speaker_dict:
+                    speaker_dict[speaker] += 1
+                else:
+                    speaker_dict[speaker] = 1
+    return speaker_dict
+
+
 def remove_stopwords(text):
     # Define your list of stopwords here
-    stopwords = ["[mr speaker in the chair]", "mr", "speaker", "sir", "will"]
-
+    stopwords = ["[mr speaker in the chair]", "mr"]
     # Combine the stopwords into a single regex pattern for efficiency
     stopwords_pattern = '|'.join(re.escape(word) for word in stopwords)
 
@@ -24,6 +36,7 @@ def remove_stopwords(text):
     cleaned_text = re.sub(stopwords_pattern, '', text, flags=re.IGNORECASE)
 
     return cleaned_text
+
 
 def length_filter(data, min_length):
     data = data[data['doc_length'] >= min_length]
