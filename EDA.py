@@ -1,8 +1,6 @@
 import pandas as pd
 from wordcloud import WordCloud
 from data_preprocessing import data_preparation, remove_stopwords, length_filter, speaker_count
-import nltk
-from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 import os.path
 
@@ -23,7 +21,7 @@ data['doc_length'] = data['main_text'].apply(lambda x: len(x.split()))
 
 # Filtered Data
 data = data.dropna()  # Remove rows with missing values
-data = length_filter(data, 50)
+data = length_filter(data, 200)
 new_rows, new_cols = data.shape
 print("\nFiltered Data:")
 print(f"{new_rows} rows, {new_cols} columns")
@@ -55,7 +53,6 @@ plt.savefig(os.path.join(path, 'filtered_doc_length.png'))
 
 # Word Clouds
 all_words = ' '.join(data['main_text'])
-
 wordcloud = WordCloud(width=800, height=800, background_color='white', min_font_size=10).generate(all_words)
 plt.figure(figsize=(12, 8), facecolor=None)
 plt.imshow(wordcloud)
@@ -64,6 +61,7 @@ plt.tight_layout(pad=5)
 plt.savefig(os.path.join(path, 'text_wordcloud'))
 
 print("\n")
+
 # Speaker Analysis
 speakers = speaker_count(data)
 print(f"Total speakers:{len(speakers.keys())}")
@@ -77,6 +75,27 @@ plt.xlabel('MP Name', ha = 'center', fontsize=14)
 plt.ylabel('Frequency', fontsize=14)
 plt.xticks(fontsize=12, ha='right', rotation=45)
 plt.yticks(fontsize=12, ha='right')
-plt.grid(True, alpha=0.5)
+plt.grid(True, alpha=0.8)
 plt.tight_layout()
 plt.savefig(os.path.join(path, 'Top10_MP_frequency.png'))
+
+exit()
+
+
+from bertopic import BERTopic
+
+# Model Training
+topic_model = BERTopic(language="english", calculate_probabilities=True, verbose=True)
+topics, probabilities = topic_model.fit_transform(data['main_text'])
+
+# Topic Extraction
+freq = topic_model.get_topic_info()
+print("Number of topics: {}".format(len(freq)))
+print(freq.head())
+
+# Topic Visualisation
+topic_model.visualize_topics()
+
+for topic_num in range(19):  # Loop over the number of topics you have
+    print(f"Topic {topic_num}:")
+    print(topic_model.get_topic(topic_num))

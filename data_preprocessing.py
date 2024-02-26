@@ -28,7 +28,7 @@ def speaker_count(data):
 
 def remove_stopwords(text):
     # Define your list of stopwords here
-    stopwords = ["[mr speaker in the chair]", "mr"]
+    stopwords = ["[mr speaker in the chair]", "mr", "speaker", "sir", "parliament"]
     # Combine the stopwords into a single regex pattern for efficiency
     stopwords_pattern = '|'.join(re.escape(word) for word in stopwords)
 
