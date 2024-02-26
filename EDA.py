@@ -1,16 +1,11 @@
 import pandas as pd
 from wordcloud import WordCloud
-from data_preprocessing import data_preparation, remove_stopwords, length_filter, speaker_count
+from data_preprocessing import load_data, preprocess_text, length_filter, speaker_count
 import matplotlib.pyplot as plt
 import os.path
+from bertopic import BERTopic
 
-data = data_preparation('Datasets/Parl_1.csv')
-
-data['main_text'] = data['main_text'].apply(remove_stopwords)
-# Set a relative path
-folder_name = 'output'
-current_directory = os.path.dirname(__file__)  # Gets the directory where the script is located
-path = os.path.join(current_directory, folder_name)
+data = load_data('Datasets/Parl_1.csv')
 
 # Overview
 print("Original Data:")
@@ -25,7 +20,17 @@ data = length_filter(data, 200)
 new_rows, new_cols = data.shape
 print("\nFiltered Data:")
 print(f"{new_rows} rows, {new_cols} columns")
+
+# Preprocessing Text
+speaker_names = list(speaker_count(data).keys())
+data['main_text'] = data.apply('main_text').apply(lambda x: preprocess_text(x, speaker_names))
+# Set a relative path
+folder_name = 'output'
+current_directory = os.path.dirname(__file__)  # Gets the directory where the script is located
+path = os.path.join(current_directory, folder_name)
+
 data.to_excel('Datasets\Excel_Dataset.xlsx', index=False)
+
 # Text Data Analysis
 plt.figure(figsize=(12, 8))
 plt.hist(data['doc_length'], bins=50, color='skyblue', edgecolor='black', alpha=0.7)
@@ -79,23 +84,34 @@ plt.grid(True, alpha=0.8)
 plt.tight_layout()
 plt.savefig(os.path.join(path, 'Top10_MP_frequency.png'))
 
-exit()
 
 
-from bertopic import BERTopic
 
 # Model Training
-topic_model = BERTopic(language="english", calculate_probabilities=True, verbose=True)
+topic_model = BERTopic()
 topics, probabilities = topic_model.fit_transform(data['main_text'])
 
 # Topic Extraction
-freq = topic_model.get_topic_info()
-print("Number of topics: {}".format(len(freq)))
-print(freq.head())
+topic_info = topic_model.get_topic_info().set_index('Topic')[['Count', 'Name', 'Representation']]
+topic_info.to_html('Output/topic_info_table.html')
 
 # Topic Visualisation
-topic_model.visualize_topics()
+fig = topic_model.visualize_topics()
+fig.write_html("Output/topic_model_visualisation.html")
 
-for topic_num in range(19):  # Loop over the number of topics you have
-    print(f"Topic {topic_num}:")
-    print(topic_model.get_topic(topic_num))
+
+# Bar Chart
+freq = topic_model.get_topic_info()
+
+# Sorting the topics by 'Count' to get the most discussed topics
+freq_sorted = freq.sort_values(by='Count', ascending=False)
+
+# Creating the bar chart
+plt.figure(figsize=(10, 6))
+plt.bar(freq_sorted['Name'], freq_sorted['Count'], color='skyblue')
+plt.title('Volume of Discourse Across Different Topics')
+plt.xlabel('Topics')
+plt.ylabel('Number of Documents')
+plt.xticks(rotation=45, ha='right') # Rotate labels for better readability
+plt.tight_layout() # Adjust layout to not cut off labels
+plt.savefig(os.path.join(path, 'topic_chart.png'))

@@ -1,16 +1,28 @@
 import pandas as pd
 import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
 
-def data_preparation(path):
-    data = pd.read_csv(path)  # loading data
-    data['main_text'] = data['main_text'].str.replace('\r|\n', ' ', regex=True)  # Removing control characters
-    data['main_text'] = data['main_text'].apply(lambda x: re.sub(r'(Head | Subhead) - \d+', '', x))
-    data['main_text'] = data['main_text'].apply(lambda x: re.sub(r'Column: \d+', '', x))  # Removing column numbers
-    data['main_text'] = data['main_text'].apply(lambda x: re.sub(r'\s+', ' ', x))  # Removing additional spaces
-
-    data['main_text'] = data['main_text'].str.lower()  # Lowercase
+def load_data(path):
+    data = pd.read_csv(path)
     return data
+
+
+def preprocess_text(text, speaker_names):
+    text = re.sub(r'\r|\n', ' ', text)
+    text = re.sub(r'(Head | Subhead) - \d+', '', text)
+    text = re.sub(r'Column: \d+', '', text)
+    text = re.sub(r'[^a-zA-Z\s]', '', text)
+    text = re.sub(r'\s+', ' ', text)
+    text = text.lower()
+    lemmatizer = WordNetLemmatizer()
+    custom_stopwords = ["mr speaker in the chair", "mr", "speaker", "sir", "parliament", "head", "subhead"]
+    custom_stopwords.extend(speaker_names)
+    all_stopwords = set(stopwords.words('english')).union(custom_stopwords)
+    tokens = [lemmatizer.lemmatize(word) for word in text.split() if word not in all_stopwords]
+
+    return ' '.join(tokens)
 
 
 def speaker_count(data):
@@ -24,18 +36,6 @@ def speaker_count(data):
                 else:
                     speaker_dict[speaker] = 1
     return speaker_dict
-
-
-def remove_stopwords(text):
-    # Define your list of stopwords here
-    stopwords = ["[mr speaker in the chair]", "mr", "speaker", "sir", "parliament"]
-    # Combine the stopwords into a single regex pattern for efficiency
-    stopwords_pattern = '|'.join(re.escape(word) for word in stopwords)
-
-    # Use the compiled regex pattern to replace occurrences of the stopwords with an empty string
-    cleaned_text = re.sub(stopwords_pattern, '', text, flags=re.IGNORECASE)
-
-    return cleaned_text
 
 
 def length_filter(data, min_length):
