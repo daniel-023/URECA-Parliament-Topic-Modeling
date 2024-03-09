@@ -1,8 +1,9 @@
+import nltk
 import pandas as pd
 import re
+import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-
 
 def load_data(path):
     data = pd.read_csv(path)
@@ -18,11 +19,16 @@ def preprocess_text(text, speaker_names):
     text = text.lower()
     lemmatizer = WordNetLemmatizer()
     custom_stopwords = ["mr speaker in the chair", "mr", "speaker", "sir", "parliament", "head", "subhead"]
-    custom_stopwords.extend(speaker_names)
+# custom_stopwords.extend(speaker_names)
     all_stopwords = set(stopwords.words('english')).union(custom_stopwords)
     tokens = [lemmatizer.lemmatize(word) for word in text.split() if word not in all_stopwords]
 
     return ' '.join(tokens)
+
+# remove outliers
+# Create n-grams
+# gradient clipping
+
 
 
 def speaker_count(data):
@@ -38,6 +44,6 @@ def speaker_count(data):
     return speaker_dict
 
 
-def length_filter(data, min_length):
-    data = data[data['doc_length'] >= min_length]
+def length_filter(data, min_length, max_length):
+    data = data[min_length <= data['doc_length'] <= max_length]
     return data

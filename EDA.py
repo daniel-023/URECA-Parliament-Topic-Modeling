@@ -3,7 +3,7 @@ from wordcloud import WordCloud
 from data_preprocessing import load_data, preprocess_text, length_filter, speaker_count
 import matplotlib.pyplot as plt
 import os.path
-from bertopic import BERTopic
+# from bertopic import BERTopic
 
 data = load_data('Datasets/Parl_1.csv')
 
@@ -14,9 +14,23 @@ print(f"{rows} rows, {cols} columns")
 print(f"Missing values in each column: \n{data.isnull().sum()}")
 data['doc_length'] = data['main_text'].apply(lambda x: len(x.split()))
 
+N = 5000
+filtered_indexes = data[data['doc_length'] >= N].index
+print(f"Indexes: {len(filtered_indexes)}")
+
+
+
+exit()
+
+
+
+
+
+
+
 # Filtered Data
 data = data.dropna()  # Remove rows with missing values
-data = length_filter(data, 200)
+data = length_filter(data, 200, 5000)
 new_rows, new_cols = data.shape
 print("\nFiltered Data:")
 print(f"{new_rows} rows, {new_cols} columns")
@@ -83,9 +97,6 @@ plt.yticks(fontsize=12, ha='right')
 plt.grid(True, alpha=0.8)
 plt.tight_layout()
 plt.savefig(os.path.join(path, 'Top10_MP_frequency.png'))
-
-
-
 
 # Model Training
 topic_model = BERTopic()
