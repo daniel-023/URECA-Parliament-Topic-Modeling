@@ -61,7 +61,7 @@ def word_cloud(df, folder, filename):
 
 
 def speaker_count(df, parl_no):
-    data = df[df['parliament_no'] == parliament_no]
+    data = df[df['parliament_no'] == parl_no]
     speakers = data['MPs_speaking']
     speaker_dict = {}
     for row in speakers:
