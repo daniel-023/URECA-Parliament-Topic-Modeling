@@ -40,9 +40,9 @@ Follow these steps to get your development environment running:
 - [Output](./Output/): Includes outputs from exploratory data analysis (EDA) and visualisations like the intertopic distance map, document visualisations, and bar charts of top topics.
 - [EDA.py](./EDA.py/): Script for exploratory data analysis including data information, document length histograms, and word clouds.
 - [data_preprocessing.py](./data_preprocessing.py/): Functions for data loading, cleaning, and preprocessing.
-- [topic_modeling.py](./topic_modeling.py/): Contains functions for training the BERTopic model, loading models, topic extraction, and visualization.
+- [topic_modeling.py](./topic_modeling.py/): Contains functions for training the BERTopic model, loading models, topic extraction, and visualisation.
 - [utils.py](./utils.py/): Helper functions for file path building and Excel writing.
-- [main.py](./main.py/): Main script that executes data loading, preprocessing, model training, and visualization.
+- [main.py](./main.py/): Main script that executes data loading, preprocessing, model training, and visualisation.
 
 ## Getting Started
 1. Clone the repository.
