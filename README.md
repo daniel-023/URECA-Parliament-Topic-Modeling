@@ -12,7 +12,7 @@ Before proceeding, ensure you have the following installed:
 When installing Microsoft Visual C++ Build Tools, make sure to select the following options:
 - C++ build tools
 - Windows 11 SDK
-- Latest version of MSVCv143 - VS 2022 C++ x64/x86 build tools
+- MSVCv143 - VS 2022 C++ x64/x86 build tools (Latest)
 
 ## Installation
 Follow these steps to get your development environment running:
@@ -35,9 +35,9 @@ Follow these steps to get your development environment running:
    ```
 
 ## Project Structure
-- `Datasets/`: Contains reports from the first 3 parliaments of Singapore.
-- `Models/`: Stores the trained BERTopic model and embeddings, managed with Git LFS.
-- `Output/`: Includes outputs from exploratory data analysis (EDA) and visualizations like the intertopic distance map, document visualizations, and bar charts of top topics.
+- [Datasets](./Datasets/): Contains reports from the first 3 parliaments of Singapore.
+- [Models](./Models/): Stores the trained BERTopic model and embeddings, managed with Git LFS.
+- [Output](./Output/): Includes outputs from exploratory data analysis (EDA) and visualisations like the intertopic distance map, document visualisations, and bar charts of top topics.
 - `EDA.py`: Script for exploratory data analysis including data information, document length histograms, and word clouds.
 - `data_preprocessing.py`: Functions for data loading, cleaning, and preprocessing.
 - `topic_modeling.py`: Contains functions for training the BERTopic model, loading models, topic extraction, and visualization.
@@ -50,16 +50,16 @@ Follow these steps to get your development environment running:
 3. Run `main.py` to execute the full pipeline.
 
 ## Usage
-Details on using individual scripts for specific tasks such as EDA, topic modeling, or visualizations can be found within the respective `.py` files.
+Details on using individual scripts for specific tasks such as EDA, topic modeling, or visualisations can be found within the respective `.py` files.
 
-## Visualizations
-The `Output/` directory contains several visualizations created from the parliamentary datasets:
+## Visualisations
+The `Output/` directory contains several visualisations created from the parliamentary datasets:
 - **Top Speakers**: Bar charts showing the most frequent speakers in each parliament.
 - **Parliament Distribution**: Pie chart showing the distribution of documents across the three parliaments.
 - **Document Length Distribution**: Histogram depicting the distribution of document lengths.
 - **Word Cloud**: Visual representation of the most common words across all speeches.
 - **Intertopic Distance Map**: Visualization of the topic clusters.
-- **Document Visualizations**: Plots showing documents clustered by topic.
+- **Document Visualisations**: Plots showing documents clustered by topic.
 - **Top Topics Bar Chart**: Bar chart showing the most prevalent topics by document count.
 - **Topic Info Table**: HTML table showing detailed topic information.
 
