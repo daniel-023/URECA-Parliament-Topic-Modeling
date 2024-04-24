@@ -1,39 +1,32 @@
 from data_preprocessing import *
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
-import os.path
+from Utils import build_file_path
 
 
 # Overview
-def describe_data(df):
+def data_info(df):
     rows, cols = df.shape
     print(f"{rows} rows, {cols} columns")
-    print(f"Missing values in each column: \n{df.isnull().sum()}")
+    print(df.info())
 
 
 def doc_length_col(df):
     df['doc_length'] = df['main_text'].apply(lambda x: len(x.split()))
-    return df
+    return df['doc_length']
 
 
-# Set a relative path
-def build_file_path(folder, filename):
-    current_directory = os.path.dirname(__file__)  # Gets the directory where the script is located
-    folder_path = os.path.join(current_directory, folder)
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-    file_path = os.path.join(folder_path, filename)
-    return file_path
-
-
-def write_excel(df, filename, folder):
-    filepath = build_file_path(folder, filename)
-    df.to_excel(filepath, index=False)
-
-
-"""
-create parliament distribution pie chart
-"""
+def parl_distribution(df, folder, filename):
+    parliament_counts = df['parliament_no'].value_counts()
+    labels = [
+        f'Parliament 1 ({parliament_counts[1]})',
+        f'Parliament 2 ({parliament_counts[2]})',
+        f'Parliament 3 ({parliament_counts[3]})'
+    ]
+    y = [parliament_counts[1], parliament_counts[2], parliament_counts[3]]
+    plt.figure(figsize=(8, 8))
+    plt.pie(y, labels=labels, autopct='%1.1f%%', startangle=140)
+    plt.savefig(build_file_path(folder, filename))
 
 
 def length_distribution_hist(df, folder, filename):
@@ -81,7 +74,7 @@ def speaker_df(df, parl_no):
 
 def speaker_frequency_bar(df, parl_no, folder, filename):
     plt.figure(figsize=(15, 10))
-    plt.bar(speaker_df(df, parl_no)['MP_name'], speaker_df(df, parl_no)['Frequency'], color='Lavender')
+    plt.bar(speaker_df( df, parl_no)['MP_name'], speaker_df(df, parl_no)['Frequency'], color='Lavender')
     plt.title(f'Parl {parl_no}: Top 10 MPs by Frequency in Documents', fontsize=16)
     plt.xlabel('MP Name', ha='center', fontsize=14)
     plt.ylabel('Frequency', fontsize=14)
