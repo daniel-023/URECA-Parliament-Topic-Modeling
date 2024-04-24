@@ -54,14 +54,14 @@ Details on using individual scripts for specific tasks such as EDA, topic modeli
 
 ## Visualisations
 The `Output/` directory contains several visualisations created from the parliamentary datasets:
-- **Top Speakers**: Bar charts showing the most frequent speakers in each parliament.
+- **Top 10 Speakers**: Bar charts showing the most frequent speakers in each parliament.
 - **Parliament Distribution**: Pie chart showing the distribution of documents across the three parliaments.
 - **Document Length Distribution**: Histogram depicting the distribution of document lengths.
 - **Word Cloud**: Visual representation of the most common words across all speeches.
-- **Intertopic Distance Map**: Visualization of the topic clusters.
+- **Intertopic Distance Map**: Visualisation of the topic clusters.
 - **Document Visualisations**: Plots showing documents clustered by topic.
-- **Top Topics Bar Chart**: Bar chart showing the most prevalent topics by document count.
-- **Topic Info Table**: HTML table showing detailed topic information.
+- **Top 5 Topics Bar Chart**: Bar chart showing the most prevalent topics by document count.
+- **Topic Info Table**: HTML table showing detailed topic representations.
 
 This project is open-sourced under the [MIT License](LICENSE).
    
