@@ -2,7 +2,7 @@ from bertopic import BERTopic
 from sklearn.feature_extraction.text import CountVectorizer
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
-from Utils import *
+from utils import *
 import pickle
 
 
