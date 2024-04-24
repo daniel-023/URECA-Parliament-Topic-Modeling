@@ -22,10 +22,7 @@ def preprocess_text(text):
     return ' '.join(words)
 
 
-def length_filter(df, min_length, max_length):
+def length_filter(df, min_length):
     df = df.dropna()  # Remove rows with missing values
-    filtered_data = df[(df['doc_length'] >= min_length) & (df['doc_length'] <= max_length)]
-    new_rows, new_cols = df.shape
-    print("\nFiltered Data:")
-    print(f"{new_rows} rows, {new_cols} columns")
+    filtered_data = df[(df['doc_length'] >= min_length)].reset_index(drop=True)
     return filtered_data
