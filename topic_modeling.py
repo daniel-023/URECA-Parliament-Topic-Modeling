@@ -1,17 +1,21 @@
 from bertopic import BERTopic
 from sklearn.feature_extraction.text import CountVectorizer
-from EDA import build_file_path
+from sentence_transformers import SentenceTransformer
+from umap import UMAP
+from Utils import *
+import pickle
 
 
 # Model Training
-
-
 def train_model(data, model_name):
-    vectorizer_model = CountVectorizer(ngram_range=(1, 2), stop_words="english")
-    topic_model = BERTopic(vectorizer_model=vectorizer_model, min_topic_size=10, nr_topics=20)
-    topics, probabilities = topic_model.fit_transform(data)
-    topic_model.save(build_file_path("models", model_name))
-    return topics, probabilities
+    sentence_model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = sentence_model.encode(data, show_progress_bar=True)
+    vectorizer_model = CountVectorizer(ngram_range=(1, 3), stop_words="english")
+    topic_model = BERTopic(vectorizer_model=vectorizer_model, min_topic_size=10, nr_topics=20).fit(data, embeddings)
+    topic_model.save(build_file_path("models1", model_name))
+    embeddings_path = build_file_path('models1', f'{model_name}_embeddings.pkl')
+    with open(embeddings_path, 'wb') as file:
+        pickle.dump(embeddings, file)
 
 
 def load_model(model_name):
@@ -20,45 +24,57 @@ def load_model(model_name):
     return loaded_model
 
 
+def load_embeddings(model_name):
+    embeddings_path = build_file_path('models1', f'{model_name}_embeddings.pkl')
+    with open(embeddings_path, 'rb') as file:
+        embeddings = pickle.load(file)
+        return embeddings
+
+
 def topic_extraction(loaded_model):
     topic_info = loaded_model.get_topic_info().set_index('Topic')[['Count', 'Name', 'Representation']]
     return topic_info
 
 
-custom_topic_names = {
-    0: 'National Service',
-    1: 'Healthcare',
-    2: 'Media',
-    3: 'National Identity/Immigration',
-    4: 'Industry Safety',
-    5: 'Taxation',
-    6: 'Legislative Procedures',
-    7: 'Transportation',
-    8: 'Urban Development',
-    9: 'Education',
-    10: 'Expenditure',
-    11: 'Departmental Budget'
-}
-
-
-def assign_topic_names(topic_info):
+def assign_topic_names(topic_info, custom_names):
     for topic_num in topic_info.index:
-        if topic_num in custom_topic_names:
-            topic_info.at[topic_num, 'Name'] = custom_topic_names[topic_num]
+        if topic_num in custom_names:
+            topic_info.at[topic_num, 'Name'] = custom_names[topic_num]
 
 
-topic_info.to_html('Output/topic_info_table.html')
+def export_topic_info(topic_info):
+    topic_info.to_html(build_file_path('Output', 'topic_info_table.html'))
 
-# Topic Visualisation
-fig = loaded_model.visualize_topics()
-fig.write_html("Output/topic_model_visualisation.html")
 
-# Bar Chart
-freq = loaded_model.get_topic_info()
+def intertopic_distance_map(loaded_model):
+    loaded_model.visualize_topics().write_html(build_file_path('Output', 'Intertopic_Distance_Map.html'))
 
-# Sorting the topics by 'Count' to get the most discussed topics
-freq_sorted = freq.sort_values(by='Count', ascending=False)
 
-# Visualize top topic keywords
-fig = loaded_model.visualize_barchart(top_n_topics=12)
-fig.write_html("Output/top_topic_keywords.html")
+def top_keywords_bar(loaded_model):
+    fig = loaded_model.visualize_barchart(top_n_topics=20)
+    fig.write_html(build_file_path('Output', 'top_topic_keywords.html'))
+
+
+def visualise_documents(data, loaded_model, embeddings):
+    loaded_model.visualize_documents(data, embeddings=embeddings)
+    reduced_embeddings = UMAP(n_neighbors=10, n_components=2, min_dist=0.0, metric='cosine').fit_transform(embeddings)
+    (loaded_model.visualize_documents(data, reduced_embeddings=reduced_embeddings)
+     .write_html(build_file_path('Output', 'Document_Visualisations.html')))
+
+
+import matplotlib.pyplot as plt
+
+
+def visualize_top_topics(topic_info, top_n=5):
+    filtered_topic_info = topic_info[1:]
+    top_topics = filtered_topic_info.sort_values(by='Count', ascending=False).head(top_n)
+    plt.figure(figsize=(12, 8))
+    plt.barh(top_topics['Name'], top_topics['Count'], color='grey')
+    plt.xlabel('Volume (Number of Documents)')
+    plt.ylabel('Topics')
+    plt.title(f'Top {top_n} Topics by Volume')
+    plt.xticks(fontsize=12)  # Increase x-axis tick font size here
+    plt.yticks(fontsize=16)
+    plt.gca().invert_yaxis()  # Invert the y-axis to have the highest count on top
+    plt.tight_layout()
+    plt.savefig(build_file_path('Output', 'top_topics_bar.png'))
