@@ -1,7 +1,7 @@
 from data_preprocessing import *
 from wordcloud import WordCloud, STOPWORDS
 import matplotlib.pyplot as plt
-from Utils import build_file_path
+from utils import build_file_path
 
 
 # Overview
