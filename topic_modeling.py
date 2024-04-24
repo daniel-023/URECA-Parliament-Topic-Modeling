@@ -12,8 +12,8 @@ def train_model(data, model_name):
     embeddings = sentence_model.encode(data, show_progress_bar=True)
     vectorizer_model = CountVectorizer(ngram_range=(1, 3), stop_words="english")
     topic_model = BERTopic(vectorizer_model=vectorizer_model, min_topic_size=10, nr_topics=20).fit(data, embeddings)
-    topic_model.save(build_file_path("models1", model_name))
-    embeddings_path = build_file_path('models1', f'{model_name}_embeddings.pkl')
+    topic_model.save(build_file_path("models", model_name))
+    embeddings_path = build_file_path('models', f'{model_name}_embeddings.pkl')
     with open(embeddings_path, 'wb') as file:
         pickle.dump(embeddings, file)
 
@@ -25,7 +25,7 @@ def load_model(model_name):
 
 
 def load_embeddings(model_name):
-    embeddings_path = build_file_path('models1', f'{model_name}_embeddings.pkl')
+    embeddings_path = build_file_path('models', f'{model_name}_embeddings.pkl')
     with open(embeddings_path, 'rb') as file:
         embeddings = pickle.load(file)
         return embeddings

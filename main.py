@@ -11,19 +11,19 @@ df['doc_length'] = doc_length_col(df)
 
 df = length_filter(df, 200)
 
-# length_distribution_hist(df, 'Output', 'doc_length_distribution.png')
+length_distribution_hist(df, 'Output', 'doc_length_distribution.png')
 
 print(data_info(df))
 
-# word_cloud(df, 'Output', 'wordcloud.png')
+word_cloud(df, 'Output', 'wordcloud.png')
 
-# speaker_frequency_bar(df, 1, 'Output', 'Parl1_Top10_Speakers')
-# speaker_frequency_bar(df, 2, 'Output', 'Parl2_Top10_Speakers')
-# speaker_frequency_bar(df, 3, 'Output', 'Parl3_Top10_Speakers')
+speaker_frequency_bar(df, 1, 'Output', 'Parl1_Top10_Speakers')
+speaker_frequency_bar(df, 2, 'Output', 'Parl2_Top10_Speakers')
+speaker_frequency_bar(df, 3, 'Output', 'Parl3_Top10_Speakers')
 
-# parl_distribution(df, 'output', 'Parl_Distribution.png')
+parl_distribution(df, 'output', 'Parl_Distribution.png')
 
-# train_model(df['main_text'], 'Parliament Topic Model')
+# To train a new topic model: train_model(df['main_text'], 'Parliament Topic Model')
 
 loaded_model = load_model('Parliament Topic Model')
 
