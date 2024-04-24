@@ -14,7 +14,7 @@ When installing Microsoft Visual C++ Build Tools, make sure to select the follow
 - Windows 11 SDK
 - MSVCv143 - VS 2022 C++ x64/x86 build tools (Latest)
 
-## Installation
+## Project Set-up
 Follow these steps to get your development environment running:
 
 1. Clone the repository with Git LFS:
@@ -38,11 +38,11 @@ Follow these steps to get your development environment running:
 - [Datasets](./Datasets/): Contains reports from the first 3 parliaments of Singapore.
 - [Models](./Models/): Stores the trained BERTopic model and embeddings, managed with Git LFS.
 - [Output](./Output/): Includes outputs from exploratory data analysis (EDA) and visualisations like the intertopic distance map, document visualisations, and bar charts of top topics.
-- `EDA.py`: Script for exploratory data analysis including data information, document length histograms, and word clouds.
-- `data_preprocessing.py`: Functions for data loading, cleaning, and preprocessing.
-- `topic_modeling.py`: Contains functions for training the BERTopic model, loading models, topic extraction, and visualization.
-- `utils.py`: Helper functions for file path building and Excel writing.
-- `main.py`: Main script that executes data loading, preprocessing, model training, and visualization.
+- [EDA.py](./EDA.py/): Script for exploratory data analysis including data information, document length histograms, and word clouds.
+- [data_preprocessing.py](./data_preprocessing.py/): Functions for data loading, cleaning, and preprocessing.
+- [topic_modeling.py](./topic_modeling.py/): Contains functions for training the BERTopic model, loading models, topic extraction, and visualization.
+- [utils.py](./utils.py/): Helper functions for file path building and Excel writing.
+- [main.py](./main.py/): Main script that executes data loading, preprocessing, model training, and visualization.
 
 ## Getting Started
 1. Clone the repository.
