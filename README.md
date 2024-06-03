@@ -1,7 +1,7 @@
 # NTU URECA Parliament Topic Modeling
 
 ## Overview
-This repository contains datasets and Python scripts for a natural language processing (NLP) project focused on Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model, stored with Git Large File Storage (LFS), identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
+This repository contains datasets and Python scripts for a natural language processing (NLP) project focused on Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
 
 ## Prerequisites
 Before proceeding, ensure you have the following installed:
@@ -36,7 +36,7 @@ Follow these steps to get your development environment running:
 
 ## Project Structure
 - [Datasets](./Datasets/): Contains reports from the first 3 parliaments of Singapore.
-- [Models](./Models/): Stores the trained BERTopic model and embeddings, managed with Git LFS.
+- [Models](./Models/): Stores the trained BERTopic model and embeddings
 - [Output](./Output/): Includes outputs from exploratory data analysis (EDA) and visualisations like the intertopic distance map, document visualisations, and bar charts of top topics.
 - [EDA.py](./EDA.py/): Script for exploratory data analysis including data information, document length histograms, and word clouds.
 - [data_preprocessing.py](./data_preprocessing.py/): Functions for data loading, cleaning, and preprocessing.
