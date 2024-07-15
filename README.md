@@ -10,8 +10,7 @@ Before proceeding, ensure you have the following installed:
 
 ## Installation Options for BERTopic
 When installing Microsoft Visual C++ Build Tools, make sure to select the following options:
-- C++ build tools
-- Windows 11 SDK
+- Windows 10/11 SDK
 - MSVCv143 - VS 2022 C++ x64/x86 build tools (Latest)
 
 ## Project Set-up
