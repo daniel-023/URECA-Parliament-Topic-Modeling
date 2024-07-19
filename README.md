@@ -3,8 +3,8 @@
 ## Overview
 This repository contains datasets and Python scripts for a natural language processing (NLP) project focused on Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
 
-## Prerequisites
-Before proceeding, ensure you have the following installed:
+## Requirements
+- Python 3.12.1
 - Git and Git Large File Storage (LFS)
 - Microsoft Visual C++ Build Tools
 
@@ -20,6 +20,7 @@ Follow these steps to get your development environment running:
    ```sh
    git clone https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling.git
    ```
+
 2. Navigate to the cloned repository directory:
    ```sh
    cd NTU-URECA-Parliament-Topic-Modeling
@@ -28,7 +29,17 @@ Follow these steps to get your development environment running:
    ```sh
    git lfs pull
    ```
-4. Install the required dependencies from `requirements.txt`
+
+4. Create a virtual environment:
+   ```sh
+   python3.12.1 -m venv myenv
+   ```
+   Activate the virtual environment (PowerShell)
+   ```sh
+   myenv/Scripts/activate.ps1
+   ```
+
+5. Install the required dependencies from `requirements.txt`
    ```sh
    pip install -r requirements.txt
    ```
@@ -42,11 +53,6 @@ Follow these steps to get your development environment running:
 - [topic_modeling.py](./topic_modeling.py/): Contains functions for training the BERTopic model, loading models, topic extraction, and visualisation.
 - [utils.py](./utils.py/): Helper functions for file path building and Excel writing.
 - [main.py](./main.py/): Main script that executes data loading, preprocessing, model training, and visualisation.
-
-## Getting Started
-1. Clone the repository.
-2. Install the required dependencies from `requirements.txt`.
-3. Run `main.py` to execute the full pipeline.
 
 ## Usage
 Details on using individual scripts for specific tasks such as EDA, topic modeling, or visualisations can be found within the respective `.py` files.

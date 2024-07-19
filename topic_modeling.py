@@ -3,7 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
 from utils import *
-import pickle
+import joblib
 
 
 # Model Training
@@ -12,23 +12,29 @@ def train_model(data, model_name):
     embeddings = sentence_model.encode(data, show_progress_bar=True)
     vectorizer_model = CountVectorizer(ngram_range=(1, 3), stop_words="english")
     topic_model = BERTopic(vectorizer_model=vectorizer_model, min_topic_size=10, nr_topics=20).fit(data, embeddings)
-    topic_model.save(build_file_path("models", model_name))
-    embeddings_path = build_file_path('models', f'{model_name}_embeddings.pkl')
+    topic_model.save(build_file_path("models", f'{model_name}.joblib'))
+    embeddings_path = build_file_path('models', f'{model_name}_embeddings.joblib')
     with open(embeddings_path, 'wb') as file:
-        pickle.dump(embeddings, file)
+        joblib.dump(embeddings, file)
 
 
 def load_model(model_name):
-    model_path = f"models/{model_name}"
-    loaded_model = BERTopic.load(model_path)
-    return loaded_model
+    model_path = build_file_path('models', f'{model_name}.joblib')
+    if os.path.exists(model_path):
+        loaded_model = BERTopic.load(model_path)
+        return loaded_model
+    else:
+        raise FileNotFoundError(f"Model file not found at {model_path}")
 
 
 def load_embeddings(model_name):
-    embeddings_path = build_file_path('models', f'{model_name}_embeddings.pkl')
-    with open(embeddings_path, 'rb') as file:
-        embeddings = pickle.load(file)
-        return embeddings
+    embeddings_path = build_file_path('models', f'{model_name}_embeddings.joblib')
+    if os.path.exists(embeddings_path):
+        with open(embeddings_path, 'rb') as file:
+            embeddings = joblib.load(file)
+            return embeddings
+    else:
+        raise FileNotFoundError(f"Embeddings file not found at {embeddings_path}")
 
 
 def topic_extraction(loaded_model):
