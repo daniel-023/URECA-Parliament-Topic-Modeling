@@ -66,10 +66,3 @@ visualise_documents(df['main_text'], loaded_model, embeddings=embeddings)
 visualize_top_topics(topic_info)
 
 
-# To do:
-# Specify Python version in requirements.txt
-# Include instructions in README
-# Update custom topic names '
-# Push model to Git LFS
-
-# Deploy to Streamlit
