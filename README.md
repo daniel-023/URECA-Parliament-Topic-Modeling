@@ -6,10 +6,10 @@ This repository contains datasets and Python scripts for a natural language proc
 ## Requirements
 - Python 3.12.1
 - Git and Git Large File Storage (LFS)
-- Microsoft Visual C++ Build Tools
+- Microsoft Visual C++ Build Tools: [https://visualstudio.microsoft.com/visual-cpp-build-tools/]
 
 ## Installation Options for BERTopic
-When installing Microsoft Visual C++ Build Tools, make sure to select the following options:
+When installing Microsoft C++ Build Tools, make sure to select the following options:
 - Windows 10/11 SDK
 - MSVCv143 - VS 2022 C++ x64/x86 build tools (Latest)
 
