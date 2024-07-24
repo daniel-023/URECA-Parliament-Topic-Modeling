@@ -32,7 +32,7 @@ Follow these steps to get your development environment running:
 
 4. Create a virtual environment:
    ```sh
-   python3.12.1 -m venv myenv
+   python -m venv myenv
    ```
    Activate the virtual environment (PowerShell)
    ```sh
