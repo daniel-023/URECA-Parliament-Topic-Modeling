@@ -33,11 +33,11 @@ topic_info = topic_extraction(loaded_model)
 
 custom_topic_names = {
     0: 'Education',
-    1: 'Land Development and Conservation',
+    1: 'Land Development and Reclamation',
     2: 'Economy and Trade',
     3: 'Public Service',
     4: 'Law and Legislation',
-    5: 'Citizenship',
+    5: 'Citizenship and Immigration',
     6: 'Public Transport and Infrastructure',
     7: 'Property and Housing',
     8: 'Agriculture and Production',
