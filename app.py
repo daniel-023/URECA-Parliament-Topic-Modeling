@@ -2,6 +2,10 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer
 from topic_modeling import load_model
 
+
+import os
+os.environ['NUMBA_DISABLE_JIT'] = '1'
+
 @st.cache_resource
 def load_topic_model(model_name):
     model = load_model(model_name)
