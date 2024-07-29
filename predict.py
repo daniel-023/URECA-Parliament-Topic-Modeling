@@ -29,7 +29,7 @@ custom_topic_names = {
     13: 'International Travel',
     14: 'Sports and National Events',
     15: 'Drug Control and Regulation',
-    16: 'Public Helth',
+    16: 'Public Health',
     17: 'Fire and Emergency Services',
     18: 'Market and Hawker Licensing'
 }
