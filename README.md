@@ -4,7 +4,7 @@
 This repository contains datasets and Python scripts for a natural language processing (NLP) project focused on Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
 
 ## Data Preview
-| parliament  | sitting_date | title | sitting_date | MPs_speaking | main_text | 
+| parliament  | sitting_date | title | MPs_speaking | main_text | 
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | 1  | 24/1/1968 | REDUNDANCY PAYMENTS FUND BILL | Mr Jek Yeun Thong (Minister for Labour); Mr Lee Kuan Yew (Prime Minister); Inche Mohd. Ariff Bin Suradi; Mr Bernard Rodrigues; Mr Ho See Beng; Mr P. Govindaswamy; Mr P. Selvadurai; Mr Teong Eng Siong; Mr P. Coomaraswamy (Mr Speaker); | Hon. Members are already aware that the withdrawal of British forces from Singapore will render a large number of workers unemployed. The House has just heard a statement by the Prime Minister that the British have again notified us that they will further cut short their stay and that they will be completely out by the end of 1971. | 
 
