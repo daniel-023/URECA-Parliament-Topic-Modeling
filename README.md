@@ -3,9 +3,13 @@
 ## Overview
 This repository contains datasets and Python scripts for a natural language processing (NLP) project focused on Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
 
+## Data Preview
+| parliament  | sitting_date | title | sitting_date | MPs_speaking | main_text | 
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| 1  | 24/1/1968 | REDUNDANCY PAYMENTS FUND BILL | Mr Jek Yeun Thong (Minister for Labour); Mr Lee Kuan Yew (Prime Minister); Inche Mohd. Ariff Bin Suradi; Mr Bernard Rodrigues; Mr Ho See Beng; Mr P. Govindaswamy; Mr P. Selvadurai; Mr Teong Eng Siong; Mr P. Coomaraswamy (Mr Speaker); | Hon. Members are already aware that the withdrawal of British forces from Singapore will render a large number of workers unemployed. The House has just heard a statement by the Prime Minister that the British have again notified us that they will further cut short their stay and that they will be completely out by the end of 1971. | 
+
 ## Requirements
 - Python 3.12.1
-- Git and Git Large File Storage (LFS)
 - Microsoft Visual C++ Build Tools: https://visualstudio.microsoft.com/visual-cpp-build-tools/
 
 ## Installation Options for BERTopic
@@ -16,7 +20,7 @@ When installing Microsoft C++ Build Tools, make sure to select the following opt
 ## Project Set-up
 Follow these steps to get your development environment running:
 
-1. Clone the repository with Git LFS:
+1. Clone the repository:
    ```sh
    git clone https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling.git
    ```
@@ -25,12 +29,8 @@ Follow these steps to get your development environment running:
    ```sh
    cd NTU-URECA-Parliament-Topic-Modeling
    ```
-3. Pull the LFS files to retrieve the model:
-   ```sh
-   git lfs pull
-   ```
 
-4. Create a virtual environment:
+3. Create a virtual environment:
    ```sh
    python -m venv myenv
    ```
@@ -53,9 +53,8 @@ Follow these steps to get your development environment running:
 - [topic_modeling.py](./topic_modeling.py/): Contains functions for training the BERTopic model, loading models, topic extraction, and visualisation.
 - [utils.py](./utils.py/): Helper functions for file path building and Excel writing.
 - [main.py](./main.py/): Main script that executes data loading, preprocessing, model training, and visualisation.
-
-## Usage
-Details on using individual scripts for specific tasks such as EDA, topic modeling, or visualisations can be found within the respective `.py` files.
+- [predict.py](./predict.py/): Script for predicting topics of unseen text using the trained BERTopic model.
+- [app.py](./app.py/): Streamlit app containing topic visualisation and topic prediction tools
 
 ## Visualisations
 The `Output/` directory contains several visualisations created from the parliamentary datasets:
