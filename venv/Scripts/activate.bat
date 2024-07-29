@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\Guest1\VSCode Projects\URECA\NTU-URECA-Parliament-Topic-Modeling\venv
+set VIRTUAL_ENV=C:\Users\danie\VSCode Projects\URECA_2023\NTU-URECA-Parliament-Topic-Modeling\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

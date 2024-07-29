@@ -1,5 +1,7 @@
+from bertopic import BERTopic
 from data_preprocessing import *
 from EDA import *
+from sentence_transformers import SentenceTransformer
 from topic_modeling import *
 
 # Loading and combining data
@@ -27,7 +29,12 @@ parl_distribution(df, 'output', 'Parl_Distribution.png')
 # train_model(df['main_text'], 'Parliament_Topic_Model')
 # exit()
 
-loaded_model = load_model('Parliament_Topic_Model')
+# To load a model stored locally:
+# loaded_model = load_model('Parliament_Topic_Model')
+
+
+# Load the trained topic model from Hugging Face Hub
+loaded_model = BERTopic.load("daniel-023/Parliament_Topic_Model")
 
 topic_info = topic_extraction(loaded_model)
 

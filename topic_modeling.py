@@ -1,23 +1,34 @@
 from bertopic import BERTopic
+import joblib
+import matplotlib.pyplot as plt
 from sklearn.feature_extraction.text import CountVectorizer
 from sentence_transformers import SentenceTransformer
 from umap import UMAP
 from utils import *
-import joblib
 
 
-# Model Training
+# Model Training - Stores trained model and embeddings in ./models
 def train_model(data, model_name):
     sentence_model = SentenceTransformer("all-MiniLM-L6-v2")
-    embeddings = sentence_model.encode(data, show_progress_bar=True)
+    embeddings = generate_embeddings(data)
     vectorizer_model = CountVectorizer(ngram_range=(1, 3), stop_words="english")
     topic_model = BERTopic(vectorizer_model=vectorizer_model, min_topic_size=10, nr_topics=20).fit(data, embeddings)
     topic_model.save(build_file_path("models", f'{model_name}.joblib'))
-    embeddings_path = build_file_path('models', f'{model_name}_embeddings.joblib')
-    with open(embeddings_path, 'wb') as file:
+    model_path = build_file_path('models', f'{model_name}_embeddings.joblib')
+    with open(model_path, 'wb') as file:
         joblib.dump(embeddings, file)
 
 
+# Generate Embeddings - Stores embeddings in ./models
+def generate_embeddings(data):
+    sentence_model = SentenceTransformer("all-MiniLM-L6-v2")
+    embeddings = sentence_model.encode(data, show_progress_bar=True)
+    model_path = build_file_path('models', f'{"Parliament_Topic_Model"}_embeddings.joblib')
+    with open(model_path, 'wb') as file:
+        joblib.dump(embeddings, file)
+
+
+# Load model stored in local directory
 def load_model(model_name):
     model_path = build_file_path('models', f'{model_name}.joblib')
     if os.path.exists(model_path):
@@ -27,6 +38,7 @@ def load_model(model_name):
         raise FileNotFoundError(f"Model file not found at {model_path}")
 
 
+# Load embeddings stored in local directory
 def load_embeddings(model_name):
     embeddings_path = build_file_path('models', f'{model_name}_embeddings.joblib')
     if os.path.exists(embeddings_path):
@@ -66,9 +78,6 @@ def visualise_documents(data, loaded_model, embeddings):
     reduced_embeddings = UMAP(n_neighbors=10, n_components=2, min_dist=0.0, metric='cosine').fit_transform(embeddings)
     (loaded_model.visualize_documents(data, reduced_embeddings=reduced_embeddings)
      .write_html(build_file_path('Output', 'Document_Visualisations.html')))
-
-
-import matplotlib.pyplot as plt
 
 
 def visualize_top_topics(topic_info, top_n=5):
