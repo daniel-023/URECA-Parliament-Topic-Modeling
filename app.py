@@ -1,11 +1,10 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer
-from topic_modeling import load_model
-
+from bertopic import BERTopic
 
 @st.cache_resource
-def load_topic_model(model_name):
-    model = load_model(model_name)
+def load_topic_model():
+    model = BERTopic.load("daniel-023/Parliament_Topic_Model")
     model.set_topic_labels(custom_topic_names)
     return model
 
@@ -41,7 +40,7 @@ custom_topic_names = {
             }
 
 # Load the model
-model = load_topic_model("Parliament_Topic_Model")
+model = load_topic_model()
  # Load the embedding model
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 

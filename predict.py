@@ -1,8 +1,8 @@
+from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
-from topic_modeling import load_model
 
 
-model = load_model("Parliament_Topic_Model")
+model = BERTopic.load("daniel-023/Parliament_Topic_Model")
 
 user_input = [input("Enter text here to identify topic: ")]
 
