@@ -2,6 +2,7 @@
 
 ## Overview
 This repository contains datasets and Python scripts for a natural language processing (NLP) project focused on Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
+[Interactive Streamlit App](https://ureca-parliament-topic-modeling.streamlit.app/)
 
 ## Data Preview
 | parliament  | sitting_date | title | MPs_speaking | main_text | 
