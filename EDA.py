@@ -1,5 +1,6 @@
 from data_preprocessing import *
 from wordcloud import WordCloud, STOPWORDS
+import plotly.express as px
 import matplotlib.pyplot as plt
 from utils import build_file_path
 
@@ -16,17 +17,28 @@ def doc_length_col(df):
     return df['doc_length']
 
 
-def parl_distribution(df, folder, filename):
-    parliament_counts = df['parliament_no'].value_counts()
-    labels = [
-        f'Parliament 1 ({parliament_counts[1]})',
-        f'Parliament 2 ({parliament_counts[2]})',
-        f'Parliament 3 ({parliament_counts[3]})'
+def parl_distribution(df):
+    parliament_counts = df['parliament_no'].value_counts().reset_index()
+    parliament_counts.columns = ['parliament', 'count']
+    custom_colours = [
+    'rgba(255, 182, 193, 1)',  # Pastel Pink
+    'rgba(173, 216, 230, 1)',  # Pastel Blue
+    'rgba(152, 251, 152, 1)'   # Pastel Green
     ]
-    y = [parliament_counts[1], parliament_counts[2], parliament_counts[3]]
-    plt.figure(figsize=(8, 8))
-    plt.pie(y, labels=labels, autopct='%1.1f%%', startangle=140)
-    plt.savefig(build_file_path(folder, filename))
+    fig = px.bar(parliament_counts, x='parliament', y='count', labels={'parliament': 'Parliament', 'count': 'Count'}, color_discrete_sequence=[custom_colours[0]]
+    , title='Distribution of Parliament Numbers')
+    fig.update_xaxes(dtick=1)
+    return fig
+
+
+def sessions_over_time(df):
+    df['sitting_date'] = pd.to_datetime(df['sitting_date'])
+
+    # Group by year and month
+    sessions_over_time = df.groupby(df['sitting_date'].dt.to_period('M')).size().reset_index(name='count')
+    sessions_over_time['sitting_date'] = sessions_over_time['sitting_date'].astype(str)
+    fig = px.line(sessions_over_time, x='sitting_date', y='count', title='Number of Sessions over Time', labels={'sitting_date': 'Date', 'count': 'Number of Sessions'})
+    return fig
 
 
 def length_distribution_hist(df, folder, filename):
