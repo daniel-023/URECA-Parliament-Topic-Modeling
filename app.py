@@ -4,7 +4,7 @@ from sentence_transformers import SentenceTransformer
 from bertopic import BERTopic
 import plotly.express as px
 from data_preprocessing import combine_data, preprocess_text
-from EDA import parl_distribution, sessions_over_time
+from EDA import parl_distribution, sessions_over_time, word_cloud
 
 @st.cache_resource
 def load_topic_model():
@@ -26,6 +26,11 @@ def read_files(filename):
 def get_embeddings(user_input):
     embeddings = embedding_model.encode([user_input], show_progress_bar=True)
     return embeddings
+
+@st.cache_data
+def generate_wordcloud(df):
+    fig = word_cloud(df)
+    st.pyplot(fig)
 
 
 df = combine_data('Parl_1.csv', 'Parl_2.csv', 'Parl_3.csv')
@@ -80,14 +85,13 @@ for file in files:
 
 if page == "Exploratory Data Analysis":
     st.header("Exploratory Data Analysis")
-    st.subheader("Parliament Distribution")
     fig = parl_distribution(df)
     st.plotly_chart(fig)
 
-    st.subheader("Number of Sessions over Time")
     fig = sessions_over_time(df)
     st.plotly_chart(fig)
 
+    generate_wordcloud(df)
 
 elif page == "Intertopic Distance Map":
     st.header("Intertopic Distance Map")

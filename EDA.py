@@ -1,11 +1,12 @@
 from data_preprocessing import *
-from wordcloud import WordCloud, STOPWORDS
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 import plotly.express as px
 import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
 from utils import build_file_path
 
 
-# Overview
 def data_info(df):
     rows, cols = df.shape
     print(f"{rows} rows, {cols} columns")
@@ -54,15 +55,16 @@ def length_distribution_hist(df, folder, filename):
     plt.savefig(build_file_path(folder, filename))
 
 
-def word_cloud(df, folder, filename):
-    all_words = ' '.join(df['main_text'])
-    wordcloud = (WordCloud(width=800, height=800, background_color='white', min_font_size=10, stopwords=STOPWORDS)
-                 .generate(all_words))
-    plt.figure(figsize=(12, 8), facecolor=None)
-    plt.imshow(wordcloud)
-    plt.axis("off")
-    plt.tight_layout(pad=5)
-    plt.savefig(build_file_path(folder, filename))
+def word_cloud(df):
+    text = ' '.join(df['title'])
+    mask = np.array(Image.open('visualisations/singapore_flag_grey.png'))
+    colours = ImageColorGenerator(mask)
+    wordcloud = WordCloud(width=800, height=400, background_color='white', contour_width=3, contour_color='black', color_func=colours, stopwords=STOPWORDS, mask=mask, collocations=False).generate(text)
+    fig, ax = plt.subplots()
+    ax.imshow(wordcloud, interpolation='bilinear')
+    ax.axis("off")
+    ax.set_title("Word Cloud of Parliament Titles", fontsize=8, loc='left')
+    return fig
 
 
 def speaker_count(df, parl_no):
