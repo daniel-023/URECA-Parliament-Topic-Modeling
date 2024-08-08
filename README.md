@@ -63,7 +63,7 @@ Follow these steps to get your development environment running:
 - [app.py](./app.py/): Streamlit app containing topic visualisation and topic prediction tools
 
 ## Visualisations
-![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/flag_wordcloud.png)
+![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/singapore_flag_wordcloud.png)
 The `Output/` directory contains several visualisations created from the parliamentary datasets:
 
 **EDA**
