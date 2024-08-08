@@ -65,6 +65,7 @@ Follow these steps to get your development environment running:
 ## Visualisations
 ![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/flag_wordcloud.png)
 The `Output/` directory contains several visualisations created from the parliamentary datasets:
+
 **EDA**
 - **Parliament Distribution**: Bar chart showing the distribution of documents across the three parliaments.
 - **Number of Sessions over Time**: Line chart showing the distribution of parliament sessions per month.
