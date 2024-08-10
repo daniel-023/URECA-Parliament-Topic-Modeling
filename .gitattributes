@@ -4,5 +4,5 @@ Intertopic_Distance_Map.html linguist-detectable=false
 topic_info_table.html linguist-detectable=false
 
 # Ignore all files in the .venv folder
-.venv/
+venv/
 
