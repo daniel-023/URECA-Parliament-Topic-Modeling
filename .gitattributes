@@ -3,18 +3,6 @@ Document_Visualisations.html linguist-detectable=false
 Intertopic_Distance_Map.html linguist-detectable=false
 topic_info_table.html linguist-detectable=false
 
-# Ignore all .pyc files
-*.pyc
-
 # Ignore all files in the .venv folder
 .venv/
 
-# Ignore node_modules
-node_modules/
-
-# Ignore log files
-*.log
-
-# Ignore data files
-*.csv
-*.dat
