@@ -5,6 +5,7 @@ from bertopic import BERTopic
 import plotly.express as px
 from data_preprocessing import combine_data, preprocess_text
 from EDA import parl_distribution, sessions_over_time, word_cloud
+from PIL import Image
 
 @st.cache_resource
 def load_topic_model():
@@ -30,8 +31,8 @@ def get_embeddings(user_input):
 @st.cache_data
 def generate_wordcloud(df):
     fig = word_cloud(df)
-    st.pyplot(fig)
-
+    return fig
+    
 
 df = combine_data('Parl_1.csv', 'Parl_2.csv', 'Parl_3.csv')
 
@@ -66,7 +67,7 @@ model = load_topic_model()
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Streamlit app title
-st.title("Topic Modeling with BERTopic")
+st.title("Parliament Topic Modeling")
 
 # Sidebar
 page = st.sidebar.selectbox("Choose a page", ["Exploratory Data Analysis", "Intertopic Distance Map", "Topic Keywords", "Topic Prediction",])
@@ -91,7 +92,8 @@ if page == "Exploratory Data Analysis":
     fig = sessions_over_time(df)
     st.plotly_chart(fig)
 
-    generate_wordcloud(df)
+    st.pyplot(generate_wordcloud(df))
+
 
 elif page == "Intertopic Distance Map":
     st.header("Intertopic Distance Map")
