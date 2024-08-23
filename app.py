@@ -23,7 +23,10 @@ def read_files(filename):
             text = f.read()
     return text
 
-@st.cache_data
+def load_data():
+    return combine_data('Parl_1.csv', 'Parl_2.csv', 'Parl_3.csv')
+
+@st.cache_data(max_entries=10)
 def get_embeddings(user_input):
     embeddings = embedding_model.encode([user_input], show_progress_bar=True)
     return embeddings
@@ -34,7 +37,7 @@ def generate_wordcloud(df):
     return fig
     
 
-df = combine_data('Parl_1.csv', 'Parl_2.csv', 'Parl_3.csv')
+df = load_data()
 
 df['main_text'] = df['main_text'].apply(preprocess_text)
 
@@ -94,6 +97,8 @@ if page == "Exploratory Data Analysis":
 
     st.pyplot(generate_wordcloud(df))
 
+    del df
+
 
 elif page == "Intertopic Distance Map":
     st.header("Intertopic Distance Map")
@@ -138,16 +143,16 @@ When you click the "Analyse" button, the model will predict the most relevant to
             embeddings = get_embeddings(user_input)
 
             # Perform topic modeling
-            new_topics, new_probs = model.transform([user_input], embeddings)
-
+            new_topics, new_probs = model.transform([user_input], embeddings) 
+            
             # Display results
             for topic, prob in zip(new_topics, new_probs):
                 topic_name = custom_topic_names.get(topic, "Unknown Topic")
                 st.write(f"Predicted Topic: {topic_name}, Topic Number: {topic}, Confidence: {prob:.2f}")
+            del embeddings
+        
         else:
             st.write("Please enter some text for analysis.")
-
-
     
     
     

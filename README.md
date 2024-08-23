@@ -63,13 +63,13 @@ Follow these steps to get your development environment running:
 - [app.py](./app.py/): Streamlit app containing topic visualisation and topic prediction tools
 
 ## Visualisations
-![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/singapore_flag_wordcloud.png)
+![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/Output/singapore_flag_wordcloud.png)
 The `Output/` directory contains several visualisations created from the parliamentary datasets:
 
 **EDA**
 - **Parliament Distribution**: Bar chart showing the distribution of documents across the three parliaments.
 - **Number of Sessions over Time**: Line chart showing the distribution of parliament sessions per month.
-- **Word Cloud**: Visual representation of the most common words across parliament reports.
+- **Word Cloud**: Visual representation of the most common words across parliament report titles.
 - **Top 10 Speakers**: Bar charts showing the most frequent speakers in each parliament.
 - **Document Length Distribution**: Histogram depicting the distribution of document lengths.
 
