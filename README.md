@@ -1,11 +1,13 @@
 # NTU URECA Parliament Topic Modeling
+## Interactive App
+<a href="https://ureca-parliament-topic-modeling.streamlit.app/">
+  <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Streamlit" height="30">
+</a>
 
 ## Overview
 This repository contains a digital humanities project focused on applying natural language processing (NLP) to Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
 
-[![Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ureca-parliament-topic-modeling.streamlit.app/)
-
-![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/Intertopic_Distance_Map.gif)
+![Intertopic Distance Map](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/Intertopic_Distance_Map.gif)
 
 ## Data Preview
 | parliament  | sitting_date | title | MPs_speaking | main_text | 
