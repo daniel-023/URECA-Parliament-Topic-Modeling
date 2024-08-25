@@ -7,7 +7,7 @@
 ## Overview
 This repository contains a digital humanities project focused on applying natural language processing (NLP) to Singapore's parliamentary debates from 1965 to 1976. The `BERTopic` model identifies topics and trends within the historical data to understand the legislative priorities and policy landscape of early Singapore.
 
-![Intertopic Distance Map](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/visualisations/Intertopic_Distance_Map.gif)
+![Intertopic Distance Map](https://github.com/daniel-023/URECA-Parliament-Topic-Modeling/blob/main/visualisations/Intertopic_Distance_Map.gif)
 
 ## Data Preview
 | parliament  | sitting_date | title | MPs_speaking | main_text | 
@@ -30,12 +30,12 @@ Follow these steps to get your development environment running:
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling.git
+   git clone https://github.com/daniel-023/URECA-Parliament-Topic-Modeling.git
    ```
 
 2. Navigate to the cloned repository directory:
    ```sh
-   cd NTU-URECA-Parliament-Topic-Modeling
+   cd URECA-Parliament-Topic-Modeling
    ```
 
 3. Create a virtual environment:
@@ -65,7 +65,7 @@ Follow these steps to get your development environment running:
 - [app.py](./app.py/): Streamlit app containing topic visualisation and topic prediction tools
 
 ## Visualisations
-![](https://github.com/daniel-023/NTU-URECA-Parliament-Topic-Modeling/blob/main/Output/singapore_flag_wordcloud.png)
+![](https://github.com/daniel-023/URECA-Parliament-Topic-Modeling/blob/main/Output/singapore_flag_wordcloud.png)
 The `Output/` directory contains several visualisations created from the parliamentary datasets:
 
 **EDA**
