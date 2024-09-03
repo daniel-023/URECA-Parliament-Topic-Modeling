@@ -4,7 +4,7 @@ from sentence_transformers import SentenceTransformer
 from bertopic import BERTopic
 import plotly.express as px
 from data_preprocessing import combine_data, preprocess_text
-from EDA import parl_distribution, sessions_over_time, word_cloud
+from EDA import parl_distribution, reports_over_time, word_cloud
 from PIL import Image
 
 @st.cache_resource
@@ -92,7 +92,7 @@ if page == "Exploratory Data Analysis":
     fig = parl_distribution(df)
     st.plotly_chart(fig)
 
-    fig = sessions_over_time(df)
+    fig = reports_over_time(df)
     st.plotly_chart(fig)
 
     st.pyplot(generate_wordcloud(df))

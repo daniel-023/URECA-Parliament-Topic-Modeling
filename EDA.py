@@ -32,13 +32,13 @@ def parl_distribution(df):
     return fig
 
 
-def sessions_over_time(df):
+def reports_over_time(df):
     df['sitting_date'] = pd.to_datetime(df['sitting_date'])
 
     # Group by year and month
-    sessions_over_time = df.groupby(df['sitting_date'].dt.to_period('M')).size().reset_index(name='count')
-    sessions_over_time['sitting_date'] = sessions_over_time['sitting_date'].astype(str)
-    fig = px.line(sessions_over_time, x='sitting_date', y='count', title='Number of Sessions over Time', labels={'sitting_date': 'Date', 'count': 'Number of Sessions'})
+    reports_over_time = df.groupby(df['sitting_date'].dt.to_period('M')).size().reset_index(name='count')
+    reports_over_time['sitting_date'] = reports_over_time['sitting_date'].astype(str)
+    fig = px.line(reports_over_time, x='sitting_date', y='count', title='Number of Reports over Time', labels={'sitting_date': 'Date', 'count': 'Number of Reports'})
     return fig
 
 
