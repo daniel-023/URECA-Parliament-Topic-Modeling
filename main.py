@@ -70,6 +70,6 @@ embeddings = load_embeddings('Parliament_Topic_Model')
 
 visualise_documents(df['main_text'], loaded_model, embeddings=embeddings)
 
-visualize_top_topics(topic_info)
+visualise_top_topics(topic_info)
 
 

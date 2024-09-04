@@ -35,7 +35,6 @@ def get_embeddings(user_input):
 def generate_wordcloud(df):
     fig = word_cloud(df)
     return fig
-    
 
 df = load_data()
 

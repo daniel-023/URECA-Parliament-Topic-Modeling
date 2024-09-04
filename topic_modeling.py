@@ -80,7 +80,7 @@ def visualise_documents(data, loaded_model, embeddings):
      .write_html(build_file_path('Output', 'Document_Visualisations.html')))
 
 
-def visualize_top_topics(topic_info, top_n=5):
+def visualise_top_topics(topic_info, top_n=5):
     filtered_topic_info = topic_info[1:]
     top_topics = filtered_topic_info.sort_values(by='Count', ascending=False).head(top_n)
     plt.figure(figsize=(12, 8))
