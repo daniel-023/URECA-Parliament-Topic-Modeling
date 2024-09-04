@@ -1,11 +1,10 @@
 import os
 import streamlit as st
+import pandas as pd
 from sentence_transformers import SentenceTransformer
 from bertopic import BERTopic
-import plotly.express as px
-from data_preprocessing import combine_data, preprocess_text
+from data_preprocessing import preprocess_text
 from EDA import parl_distribution, reports_over_time, word_cloud
-from PIL import Image
 
 @st.cache_resource
 def load_topic_model():
@@ -23,9 +22,6 @@ def read_files(filename):
             text = f.read()
     return text
 
-def load_data():
-    return combine_data('Parl_1.csv', 'Parl_2.csv', 'Parl_3.csv')
-
 @st.cache_data(max_entries=10)
 def get_embeddings(user_input):
     embeddings = embedding_model.encode([user_input], show_progress_bar=True)
@@ -36,10 +32,7 @@ def generate_wordcloud(df):
     fig = word_cloud(df)
     return fig
 
-df = load_data()
-
-df['main_text'] = df['main_text'].apply(preprocess_text)
-
+df = pd.read_excel('Datasets/parl_data.xlsx')
 
 custom_topic_names = {
                 0: 'Education',
