@@ -1,7 +1,7 @@
 # NTU URECA Parliament Topic Modeling
 ## Interactive App
 <a href="https://ureca-parliament-topic-modeling.streamlit.app/">
-  <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Streamlit" height="20">
+  <img src="https://static.streamlit.io/badges/streamlit_badge_black_white.svg" alt="Streamlit" height="30">
 </a>
 
 ## Overview
