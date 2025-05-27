@@ -6,7 +6,7 @@
 
 
 ## Overview
-This project applies Natural Language Processing (NLP) techniques to analyze Singapore's parliamentary debates between 1965 and 1976. Using the `BERTopic` model, we uncover topics and trends in the legislative priorities of early Singapore, contributing to a deeper understanding of the political and policy landscape during this period.
+This project applies Natural Language Processing (NLP) techniques to analyze Singapore's parliamentary debates between 1965 and 1976. Using BERTopic, we uncover topics and trends in the legislative priorities of early Singapore, contributing to a deeper understanding of the political and policy landscape during this period.
 
 ![Intertopic Distance Map](https://github.com/daniel-023/URECA-Parliament-Topic-Modeling/blob/main/visualisations/Intertopic_Distance_Map.gif)
 
